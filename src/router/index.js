@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
-
 const router = new VueRouter({
   routes:[
     // 重定向页面
@@ -57,10 +56,18 @@ const router = new VueRouter({
   ]
 })
 // 路由守卫
-// router.beforeEach((to, from, next) => {
-//   console.log(to);
-//   console.log(from);
-//   next();
-// })
+router.beforeEach((to, from, next) => {
+  //初次登录只有登陆页面放行
+  if(to.path=="/login"){
+    next();
+  }else{//否则
+    //如果有登录信息则直接放行
+    if(localStorage.getItem("userName")!=null){
+      next()
+    }else{//否则不放行并提示
+      alert("请登录")
+    }
+  }
+})
 
 export default router
