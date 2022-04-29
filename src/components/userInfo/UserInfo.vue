@@ -2,7 +2,7 @@
   <div>
       <el-upload
         class="avatar-uploader"
-        action="http://localhost:8080/upload/success"
+        action="http://localhost/upload/success"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
@@ -37,14 +37,14 @@ export default {
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
-        var fd = new FormData()
-        fd.append('file',file)
+        // var fd = new FormData()
+        // fd.append('file',file)
         
-        this.$axios.post('http://localhost:8080/upload',fd).then(res=>{
-          console.log(res);
-        }).catch(err=>{
-          console.log(err);
-        })
+        // this.$axios.post('http://localhost/upload',fd).then(res=>{
+        //   console.log(res);
+        // }).catch(err=>{
+        //   console.log(err);
+        // })
         return isJPG1 && isJPG2 && isLt2M;
       }
     },
