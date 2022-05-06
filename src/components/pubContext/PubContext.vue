@@ -122,7 +122,7 @@ export default {
         var fd=new FormData()
         fd.append('file',file)
         // 上传头像
-        this.$axios.post('http://localhost/upload',fd).then(res=>{
+        this.$axios.post('http://localhost:8089/upload',fd).then(res=>{
           //上传成功将头像的url替换
           this.blogInfo.blogImg=res.data.path;
         }).catch(err=>{
@@ -152,7 +152,7 @@ export default {
         // 对后台接口进行请求
         this.$axios({
           method:'post',
-          url:'http://localhost/blog/save',
+          url:'http://localhost:8089/blog/save',
           data:{
             blogTitle:title,
             blogType:type,
