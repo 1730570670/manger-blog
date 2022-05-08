@@ -23,7 +23,7 @@
           <span>上传图片:</span>
           <el-upload
             class="avatar-uploader"
-            action="http://localhost/upload/success"
+            action="http://localhost:8089/upload/success"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -34,7 +34,7 @@
       </div>
       <!-- markdown编辑器 -->
       <mavon-editor v-model="context" :toolbars="toolbars"
-        @imgAdd="imgAdd" @imgDel="imgDel"
+
        />
       <el-button type="primary" @click="sendBolg" style="width:100%;margin-top:10px;">发送文章</el-button>
   </div>
@@ -77,9 +77,8 @@ export default {
             },
             // 图片地址
             file: '',
+            //请求获取分类
             classItem:[],
-            // MarkDown上传图片存的数组
-            imgIndex:0
         }
     },
     methods: {
@@ -126,16 +125,9 @@ export default {
           //上传成功将头像的url替换
           this.blogInfo.blogImg=res.data.path;
         }).catch(err=>{
-          this.$message.error('上传图片出错啦')
+          this.$message.error("上传失败,请检查图片是否符合标准")
         }) 
         return isJPG1 && isJPG2 && isLt2M;
-      },
-      imgAdd(pos,file){
-        console.log(pos,file);
-        this.imgIndex=pos
-      },
-      imgDel(pos,file){
-        
       },
       //点击发送之后的回调函数
       sendBolg () {

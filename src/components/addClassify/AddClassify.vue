@@ -58,6 +58,7 @@ export default {
         dialogVisible:false,
         //编辑的值
         editData:'',
+        // 修改分类名时,要穿新值旧值,将值设定,方便使用
         oldEditData:''
       }
     },
@@ -67,7 +68,8 @@ export default {
         var i = await this.$ajaxGet('/blog/type')
         // 发生错误,返回
         if(i.message){
-            this.$message.success('请求失败啦'+i.message)
+          this.$message.error('请求失败啦'+i.message)
+          return;
         }
         this.typeData=i.data.data
       },

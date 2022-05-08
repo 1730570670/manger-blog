@@ -94,11 +94,26 @@ export default {
         }
     })
     },
-    
+    // 添加访客(每个人进来都要添加记录,且挂载时创建)
+    addVisitor(){
+      var Ip=returnCitySN['cip']
+      var cityname=returnCitySN['cname']
+      this.$axios({
+        method:'post',
+        url:'http://localhost:8089/ipAddress',
+        data:{
+          ipAddress:Ip,
+          areaAddress:cityname
+        }
+      })
+    }
   },
   // 组件
   components:{
     BgTemplate
+  },
+  mounted() {
+    this.addVisitor()
   },
 }
 </script>
