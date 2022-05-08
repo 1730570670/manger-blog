@@ -62,14 +62,19 @@ export default {
           ]
         }, 
         {
-          label:"修改信息",
+          label:"查看信息",
           index:"1-3",
           icon:"el-icon-edit-outline",
           children:[
             {
-              label:"分类管理",
-              index:"/home/updateClassify",
-              icon:"el-icon-s-operation"
+              label:"前台浏览记录",
+              index:"/home/frontVisitor",
+              icon:"el-icon-document"
+            },
+            {
+              label:"后台浏览记录",
+              index:"/home/mangerVisitor",
+              icon:"el-icon-document"
             },
             {
               label:"文章管理",

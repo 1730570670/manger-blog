@@ -39,11 +39,17 @@ const router = new VueRouter({
           name:'pubContext',
           component:()=>import('@/components/pubContext/PubContext.vue')
         },
-        // 分类管理
+        // 前台浏览记录
         {
-          path:'/home/updateClassify',
-          name:'updateClassify',
-          component:()=>import('@/components/updateClassify/UpdateClassify.vue')
+          path:'/home/frontVisitor',
+          name:'frontVisitor',
+          component:()=>import('@/components/frontVisitor/FrontVisitor.vue')
+        },
+        // 后台浏览记录
+        {
+          path:'/home/mangerVisitor',
+          name:'mangerVisitor',
+          component:()=>import('@/components/mangerVisitor/MangerVisitor.vue')
         },
         // 文章管理
         {
