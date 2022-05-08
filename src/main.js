@@ -7,7 +7,6 @@ import 'element-ui/lib/theme-chalk/index.css';//导入ElementUI全局样式
 import axiox from "axios";//引入axios
 import Pubsub from 'pubsub-js'//组件通信组件
 
-// axiox.defaults.baseURL = '/api'// 注册axios全局插件
 Vue.prototype.$axios=axiox;
 //注册组件通信组件
 Vue.prototype.$bus=Pubsub;
@@ -27,6 +26,9 @@ import {ajaxGet,ajaxPost} from './http/axios'
 Vue.prototype.$ajaxGet=ajaxGet;
 Vue.prototype.$ajaxPost=ajaxPost;
 
+import FormatDate from '@/common/formatDate'//引入格式化时间函数
+//注册格式化时间函数
+Vue.prototype.$formatDate=FormatDate;
 // markdown
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';

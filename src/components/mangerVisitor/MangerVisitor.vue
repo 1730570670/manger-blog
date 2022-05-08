@@ -23,6 +23,7 @@
                 label="访问时间">
             </el-table-column>
           </el-table>
+          <span>共有&nbsp;<font color="#409EFF">{{pageSum}}</font>&nbsp;条数据</span>
       </div>
       <!-- 分页组件 -->
       <div class="pageTemplate">
@@ -44,7 +45,9 @@ export default {
             //查询出来的信息储存在此处
             mangerVisitorInfo:[],
             //分页最大页数,通过请求获取
-            pageCurrent:0
+            pageCurrent:0,
+            //共有多少条数据,通过接口获取
+            pageSum:0
         }
       },
       methods: {
@@ -57,8 +60,14 @@ export default {
                 return;
             }
             this.pageCurrent=i.data.data.pages;//赋值 最大页数
-            this.mangerVisitorInfo=i.data.data.records//表格书赋值
-        }
+            this.pageSum=i.data.data.total//共有多少条数据
+            //格式化时间
+            i.data.data.records.forEach(item => {
+                item.visitorTime=this.$formatDate(item.visitorTime); 
+            });
+            this.mangerVisitorInfo=i.data.data.records//表格数据赋值
+        },
+         
       },
       mounted() {
           //挂载时加载分页查询事件
