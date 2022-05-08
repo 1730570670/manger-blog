@@ -23,7 +23,8 @@
                 label="访问时间">
             </el-table-column>
           </el-table>
-          <span>共有&nbsp;<font color="#409EFF">{{pageSum}}</font>&nbsp;条数据</span>
+          <span>共有&nbsp;<font color="#409EFF">{{pageSum}}</font>&nbsp;条数据,
+          本页有<font color="#409EFF">{{thisPageCurrent}}</font>条数据</span>
       </div>
       <!-- 分页组件 -->
       <div class="pageTemplate">
@@ -47,7 +48,9 @@ export default {
             //分页最大页数,通过请求获取
             pageCurrent:0,
             //共有多少条数据,通过接口获取
-            pageSum:0
+            pageSum:0,
+            //本页共有多少条数据
+            thisPageCurrent:0
         }
       },
       methods: {
@@ -61,6 +64,7 @@ export default {
             }
             this.pageCurrent=i.data.data.pages;//赋值 最大页数
             this.pageSum=i.data.data.total//共有多少条数据
+            this.thisPageCurrent=i.data.data.records.length//赋值本页多少数据
             //格式化时间
             i.data.data.records.forEach(item => {
                 item.visitorTime=this.$formatDate(item.visitorTime); 

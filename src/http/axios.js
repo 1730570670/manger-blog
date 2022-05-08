@@ -20,3 +20,17 @@ export async function ajaxPost(url){
         })
     return i
 }
+
+export async function ajaxMethod(method,url,data){
+    var i = 0;
+    await axios({
+        method:method,
+        url:'http://localhost:8089'+url,
+        data:data
+    }).then(res=>{
+        i=res;
+    }).catch(error=>{
+        i=res;
+    })
+    return i;
+}

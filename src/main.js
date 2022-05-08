@@ -22,10 +22,10 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 };
 //将封装的axios进行全局使用
-import {ajaxGet,ajaxPost} from './http/axios'
+import {ajaxGet,ajaxPost,ajaxMethod} from './http/axios'
 Vue.prototype.$ajaxGet=ajaxGet;
 Vue.prototype.$ajaxPost=ajaxPost;
-
+Vue.prototype.$ajaxMethod=ajaxMethod;
 import FormatDate from '@/common/formatDate'//引入格式化时间函数
 //注册格式化时间函数
 Vue.prototype.$formatDate=FormatDate;
