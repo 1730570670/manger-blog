@@ -33,9 +33,7 @@
         </div>
       </div>
       <!-- markdown编辑器 -->
-      <mavon-editor v-model="context" :toolbars="toolbars"
-
-       />
+      <mavon-editor v-model="context" :toolbars="toolbars"/>
       <el-button type="primary" @click="sendBolg" style="width:100%;margin-top:10px;">发送文章</el-button>
   </div>
 </template>
@@ -104,7 +102,7 @@ export default {
         this.$message.success('上传博客头像成功')
       },
       //上传图片过程中的回调
-     async beforeAvatarUpload(file) {
+      async beforeAvatarUpload(file) {
         const isJPG1 = file.type === 'image/png';//规定格式
         const isJPG2 = file.type === 'image/jpeg';//规定格式
         const isLt2M = file.size / 1024 / 1024 < 2;//规定大小

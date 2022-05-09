@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-loading="this.$store.state.loading" element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading">
     <div class="addClassifyContainer">
       <el-input v-model="saveType" placeholder="请输入添加的分类" prefix-icon="el-icon-circle-plus"></el-input>
       <el-button type="primary" @click="saveBlogType" style="margin-left:20px;">添加分类</el-button>
@@ -65,13 +66,16 @@ export default {
     methods: {
       //查询分类信息回调函数
       async searchType(){
+        this.$store.commit('changeLoading',true)//发送请求加载Loading
         var i = await this.$ajaxGet('/blog/type')
         // 发生错误,返回
         if(i.message){
           this.$message.error('请求失败啦'+i.message)
+          this.$store.commit('changeLoading',false)//发送请求加载Loading
           return;
         }
         this.typeData=i.data.data
+        this.$store.commit('changeLoading',false)//发送请求加载Loading
       },
       // 添加分类
       async saveBlogType(){
@@ -120,7 +124,7 @@ export default {
       editStatus(scope){
         this.dialogVisible=true
         //获取下标到对应数组中的值
-        var typeName=this.typeData[scope.$index].blogTypename;
+        var typeName=scope.row.blogTypename;
         // 将值复制到编辑框
         this.editData=typeName;
         // 修改值传两个参数(新值,旧值,故新增值)

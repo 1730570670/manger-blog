@@ -10,7 +10,7 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    //触发行为(将loading赋值为相反的)
+    //触发行为(将loading赋值为传的状态)
     changeLoading(state,status){
       state.loading=status
     }

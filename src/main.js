@@ -6,7 +6,7 @@ import ElementUI from 'element-ui';//引入ElementUI
 import 'element-ui/lib/theme-chalk/index.css';//导入ElementUI全局样式
 import axiox from "axios";//引入axios
 import Pubsub from 'pubsub-js'//组件通信组件
-
+import "animate.css";//引入animat动画样式
 Vue.prototype.$axios=axiox;
 //注册组件通信组件
 Vue.prototype.$bus=Pubsub;
