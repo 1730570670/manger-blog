@@ -30,7 +30,7 @@ export async function ajaxMethod(method,url,data){
     }).then(res=>{
         i=res;
     }).catch(error=>{
-        i=res;
+        i=error;
     })
     return i;
 }

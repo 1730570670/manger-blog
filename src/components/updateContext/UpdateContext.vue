@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div v-loading="this.$store.state.loading" element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading">
       <div class="blogInfo">
-        <el-table
+        <el-table 
             :data="blogInfoData"
             style="width: 100%">
             <!-- 数据表格 -->
@@ -77,19 +78,20 @@ export default {
         //共有的数据,通过后台获取
         pageSum:0,
         //本页数量
-        thisPageCurrent:0
+        thisPageCurrent:0,
       }
     },
     methods: {
       //分页组件发送请求
       async pageSend(index){
+        this.$store.commit('changeLoading',true)//发送请求加载Loading
         var i = await this.$ajaxMethod('post','/blog/'+index,{})
         //请求发生了错误,返回错误信息
         if(i.message){
           this.$message.error('请求发生错误啦'+i.message)
+          this.$store.commit('changeLoading',false)
           return ;
         }
-        
         this.pageCurrent=i.data.data.pages//赋值页数
         this.pageSum=i.data.data.total//赋值共有多少条数据
         this.thisPageCurrent=i.data.data.records.length//赋值本页多少条数据
@@ -97,8 +99,8 @@ export default {
         i.data.data.records.forEach(item => {
           item.blogCreateTime=this.$formatDate(item.blogCreateTime);
         });
-        
         this.blogInfoData=i.data.data.records//赋值
+        this.$store.commit('changeLoading',false)
       },
     },
     mounted() {

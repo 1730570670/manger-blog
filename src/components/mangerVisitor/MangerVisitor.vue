@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div  v-loading="this.$store.state.loading" element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading">
       <div class="info">
         <el-table
             :data="mangerVisitorInfo"
@@ -23,8 +24,8 @@
                 label="访问时间">
             </el-table-column>
           </el-table>
-          <span>共有&nbsp;<font color="#409EFF">{{pageSum}}</font>&nbsp;条数据,
-          本页有<font color="#409EFF">{{thisPageCurrent}}</font>条数据</span>
+          <span>共有&nbsp;<font color="#409EFF">{{pageInfo.pageSum}}</font>&nbsp;条数据,
+          本页有<font color="#409EFF">{{pageInfo.thisPageCurrent}}</font>条数据</span>
       </div>
       <!-- 分页组件 -->
       <div class="pageTemplate">
@@ -32,7 +33,7 @@
             @current-change="pageSend"
             :background="true"
             layout="prev, pager, next"
-            :total="pageCurrent*10">
+            :total="pageInfo.pageCurrent*10">
           </el-pagination>
       </div>
   </div>
@@ -45,31 +46,37 @@ export default {
         return {
             //查询出来的信息储存在此处
             mangerVisitorInfo:[],
-            //分页最大页数,通过请求获取
-            pageCurrent:0,
-            //共有多少条数据,通过接口获取
-            pageSum:0,
-            //本页共有多少条数据
-            thisPageCurrent:0
+            //页数,数据,本页多少条数据
+            pageInfo:{
+                //共有多少页数
+                pageCurrent:0,
+                //共有多少条数据
+                pageSum:0,
+                //本页有多少条数据
+                thisPageCurrent:0
+            }
         }
       },
       methods: {
           //点击分页发送查询请求
         async pageSend(index){ 
+            this.$store.commit('changeLoading',true)//发送请求加载Loading
             var i = await this.$ajaxGet('/ipAddress/manger/'+index)
             //请求发生错误,返回
             if(i.message){
                 this.$message.error('请求出错啦'+i.message)
+                this.$store.commit('changeLoading',false)//发送请求加载Loading
                 return;
             }
-            this.pageCurrent=i.data.data.pages;//赋值 最大页数
-            this.pageSum=i.data.data.total//共有多少条数据
-            this.thisPageCurrent=i.data.data.records.length//赋值本页多少数据
+            this.pageInfo.pageCurrent=i.data.data.pages;//赋值 最大页数
+            this.pageInfo.pageSum=i.data.data.total//共有多少条数据
+            this.pageInfo.thisPageCurrent=i.data.data.records.length//赋值本页多少数据
             //格式化时间
             i.data.data.records.forEach(item => {
                 item.visitorTime=this.$formatDate(item.visitorTime); 
             });
             this.mangerVisitorInfo=i.data.data.records//表格数据赋值
+            this.$store.commit('changeLoading',false)//发送请求加载Loading
         },
          
       },
