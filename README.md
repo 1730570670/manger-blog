@@ -1,24 +1,5 @@
-# vue-blog
+npm run serve 运行项目
 
-## Project setup
-```
-npm install
-```
+有问题可咨询 3090829011
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+代做各种网站,不包服务器
