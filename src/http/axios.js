@@ -1,7 +1,7 @@
 import axios from "axios";
 export async function ajaxGet(url){
     var i=0;
-    await axios.get('http://localhost:8089'+url)
+    await axios.get('http://www.hnhhjy.xyz:8089'+url)
         .then(res=>{
             i = res;
         }).catch(err=>{
@@ -12,7 +12,7 @@ export async function ajaxGet(url){
 
 export async function ajaxPost(url){
     var i=0;
-    await axios.post('http://localhost:8089'+url)
+    await axios.post('http://www.hnhhjy.xyz:8089'+url)
         .then(res=>{
             i = res;
         }).catch(err=>{
@@ -25,7 +25,7 @@ export async function ajaxMethod(method,url,data){
     var i = 0;
     await axios({
         method:method,
-        url:'http://localhost:8089'+url,
+        url:'http://www.hnhhjy.xyz:8089'+url,
         data:data
     }).then(res=>{
         i=res;

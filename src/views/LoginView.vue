@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       loginDate:{
-        username:'admin',
+        username:'Test',
         userpassword:'123456'
       },
       // 表单验证
@@ -95,17 +95,17 @@ export default {
     })
     },
     // 添加访客(每个人进来都要添加记录,且挂载时创建)
-    addVisitor(){
+    async addVisitor(){
       var Ip=returnCitySN['cip']
       var cityname=returnCitySN['cname']
-      this.$axios({
-        method:'post',
-        url:'http://localhost:8089/ipAddress',
-        data:{
+      var i = await this.$ajaxMethod('post','/ipAddress',{
           ipAddress:Ip,
           areaAddress:cityname
-        }
       })
+      if(i.message){
+        this.$message.error('请联系管理员')
+        return;
+      }
     }
   },
   // 组件

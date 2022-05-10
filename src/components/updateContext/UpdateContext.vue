@@ -95,7 +95,7 @@
             <span>上传图片:</span>
             <el-upload
               class="avatar-uploader"
-              action="http://localhost:8089/upload/success"
+              action="http://www.hnhhjy.xyz:8089/upload/success"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
@@ -139,7 +139,7 @@ export default {
           //本页数量
           thisPageCurrent:0,
           // 查询第几页
-          searchPageIndex:0
+          searchPageIndex:1
         },
         // 编辑面板状态
         editStatus:false,
@@ -238,7 +238,7 @@ export default {
         var fd=new FormData()
         fd.append('file',file)
         // 上传头像
-        this.$axios.post('http://localhost:8089/upload',fd).then(res=>{
+        this.$axios.post('http://www.hnhhjy.xyz:8089/upload',fd).then(res=>{
           //上传成功将头像的url替换
           this.editInfo.blogImgUrl=res.data.path;
         }).catch(err=>{
@@ -279,7 +279,7 @@ export default {
     },
     mounted() {
       //挂载时触发分页查询事件
-      this.pageSend(1);
+      this.pageSend(this.pageInfo.searchPageIndex);
       //触发请求分类
       this.classItemRequest();
     },

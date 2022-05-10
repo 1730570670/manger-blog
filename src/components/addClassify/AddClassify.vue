@@ -88,7 +88,8 @@ export default {
         var i = await this.$ajaxGet('/blog/saveType/'+this.saveType)
         // 请求发生错误
         if(i.message){
-            this.$message.success('请求失败啦'+i.message)
+            this.$message.error('请求失败啦'+i.message)
+            return;
         }
         //请求名称发生重复
         if(i.data==false){
@@ -110,13 +111,13 @@ export default {
         //点击删除
         if(reslut==true){
           var i = await this.$ajaxGet('/blog/deleteType/'+typeName)
-          if(i.data.code==200){
-            this.$message.success('删除成功')
-            this.searchType();
+          //发生错误返回提示
+          if(i.message){
+            this.$message.error('请求失败啦'+i.message)
             return;
           }
-          //发生错误返回提示
-          this.$message.error('删除失败'+i.message)
+          this.$message.success('删除成功')
+          this.searchType();
         }
         
       },
@@ -134,13 +135,9 @@ export default {
       async editFunction(){
         //请求修改接口
         var i = await this.$ajaxGet(`/blog/updateType/${this.oldEditData}/${this.editData}`)
-        //请求修改成功
-        if(i.data.code==200){
-          this.$message.success('修改成功')
-          //修改后关闭对话框
-          this.dialogVisible=false
-          //将信息更新(查询信息)
-          this.searchType();
+        //请求失败,返回错误信息
+        if(i.message){
+          this.$message.error('修改失败'+i.message)
           return ;
         }
         // 已存在分类名
@@ -148,8 +145,12 @@ export default {
           this.$message.error('该分类名称已存在')
           return ;
         }
-        this.$message.error('修改失败'+i.message)
-        
+        //请求成功
+        this.$message.success('修改成功')
+        //修改后关闭对话框
+        this.dialogVisible=false
+        //将信息更新(查询信息)
+        this.searchType();
       }
     },
     mounted() {

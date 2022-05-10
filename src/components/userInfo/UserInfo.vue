@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <div class="UserInfoContainer">
+     <div class="UserInfoContainer" v-if="UserInfo">
        <el-card v-for="item,key,index in UserInfo" :key="index">
         <el-tag>{{key}}</el-tag>
         <span class="spanContext">{{item}}</span>
@@ -40,15 +40,18 @@ export default {
     },
     methods: {
      //查询前台显示信息
-     async searchUserInfo(){
-       var i = await this.$ajaxGet('/AdminInfo')
-       //请求发生错误
-       if(i.message){
-         this.$message.errer('请求发生错误啦'+i.message)
-         return;
-       }
-       this.UserInfo=i.data.data
-     },
+      async searchUserInfo(){
+        this.$store.commit('changeLoading',true)//发送请求加载Loading
+        var i = await this.$ajaxGet('/AdminInfo')
+        //请求发生错误
+        if(i.message){
+          this.$message.errer('请求发生错误啦'+i.message)
+          this.$store.commit('changeLoading',false)//发送请求加载Loading
+          return;
+        }
+        this.UserInfo=i.data.data
+        this.$store.commit('changeLoading',false)//发送请求加载Loading
+      },
       //修改信息
       async editInfo(){
         //获取信息

@@ -23,7 +23,7 @@
           <span>上传图片:</span>
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:8089/upload/success"
+            action="http://www.hnhhjy.xyz:8089/upload/success"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -119,7 +119,7 @@ export default {
         var fd=new FormData()
         fd.append('file',file)
         // 上传头像
-        this.$axios.post('http://localhost:8089/upload',fd).then(res=>{
+        this.$axios.post('http://www.hnhhjy.xyz:8089/upload',fd).then(res=>{
           //上传成功将头像的url替换
           this.blogInfo.blogImg=res.data.path;
         }).catch(err=>{
@@ -128,7 +128,7 @@ export default {
         return isJPG1 && isJPG2 && isLt2M;
       },
       //点击发送之后的回调函数
-      sendBolg () {
+      async sendBolg () {
         // 验证信息
         if(this.blogInfo.blogTitle=='' || this.blogInfo.blogImg=='' || this.blogInfo.blogType==''){
           this.$message.warning('请将信息填写完整');
@@ -140,26 +140,23 @@ export default {
         var opID=1;
         var htmlContent = this.converter.makeHtml(this.context)
         // 对后台接口进行请求
-        this.$axios({
-          method:'post',
-          url:'http://localhost:8089/blog/save',
-          data:{
+        var i =await this.$ajaxMethod('post','/blog/save',{
             blogTitle:title,
             blogType:type,
             blogImgUrl:img,
             blogContent:htmlContent,
-            opID:opID
+            opID:opID})
+
+          //请求出现问题,返回错误信息
+          if(i.message){
+            this.$message.error('请求接口失败啦'+i.message)
+            return;
           }
-        }).then(res=>{
           // 请求成功则提示,并清空数据
-          if(res.data.code==200){
-            this.$message.success('发布成功')
-            // 清空数据
-            this.blogInfo.blogTitle=this.blogInfo.blogType=this.blogInfo.blogImg=this.context=''
-          }
-        }).catch(error=>{
-          this.$message.error('发布出问题啦'+error)
-        })
+          this.$message.success('发布成功')
+          // 清空数据
+          this.blogInfo.blogTitle=this.blogInfo.blogType=this.file=this.blogInfo.blogImg=this.context=''
+          
       },
   },
   mounted() {
